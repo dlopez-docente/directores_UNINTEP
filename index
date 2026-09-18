@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guía para Directores — Etapa Práctica | UNINTEP</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy: #1c3854;
+    --navy-deep: #142a3f;
+    --gold: #c08f2c;
+    --gold-soft: #e7c877;
+    --cream: #f7f4ec;
+    --paper: #fffdf9;
+    --ink: #262420;
+    --ink-soft: #55524a;
+    --line: #e3ddc9;
+    --ok: #3f6b4f;
+    --warn: #8a3b2c;
+    --radius: 3px;
+    --sidebar-w: 288px;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{ font-family:'IBM Plex Sans', sans-serif; background:var(--cream); color:var(--ink); -webkit-font-smoothing:antialiased; }
+  h1,h2,h3,.serif{font-family:'Source Serif 4', serif;}
+  a{color:inherit;}
+  img{max-width:100%;}
+
+  .shell{ display:flex; min-height:100vh; }
+
+  .sidebar{
+    width:var(--sidebar-w); flex-shrink:0;
+    background:linear-gradient(180deg, var(--navy) 0%, var(--navy-deep) 100%);
+    color:#eef1f4; display:flex; flex-direction:column;
+    position:fixed; top:0; bottom:0; left:0; z-index:40;
+    transition:transform .28s ease;
+  }
+  .brand{ padding:28px 26px 20px; border-bottom:1px solid rgba(255,255,255,.12); }
+  .brand .mark{ font-size:12.5px; letter-spacing:.06em; color:var(--gold-soft); font-weight:600; margin-bottom:6px; }
+  .brand h1{ font-size:21px; line-height:1.25; margin:0 0 4px; color:#fff; font-weight:600; }
+  .brand p{ font-size:13px; color:#b9c4cf; margin:0; line-height:1.5; }
+
+  nav.steps{ flex:1; overflow-y:auto; padding:14px 12px 20px; }
+  .step-btn{
+    display:flex; align-items:flex-start; gap:12px; width:100%; text-align:left;
+    background:none; border:none; color:#c9d2da; padding:12px 12px; border-radius:var(--radius);
+    cursor:pointer; font-family:inherit; font-size:14px; line-height:1.4; margin-bottom:2px;
+    transition:background .15s ease, color .15s ease;
+  }
+  .step-btn .num{
+    flex-shrink:0; width:26px; height:26px; border-radius:50%;
+    border:1px solid rgba(255,255,255,.28); display:flex; align-items:center; justify-content:center;
+    font-size:12px; font-weight:600; color:#c9d2da;
+  }
+  .step-btn:hover{ background:rgba(255,255,255,.06); color:#fff; }
+  .step-btn.active{ background:rgba(255,255,255,.1); color:#fff; }
+  .step-btn.active .num{ background:var(--gold); border-color:var(--gold); color:var(--navy-deep); }
+
+  .sidebar-foot{ padding:16px 26px 22px; border-top:1px solid rgba(255,255,255,.12); font-size:12px; color:#8fa0ac; line-height:1.5; }
+
+  .main{ margin-left:var(--sidebar-w); flex:1; min-width:0; }
+  .topbar{ display:none; position:sticky; top:0; z-index:30; background:var(--navy); color:#fff; padding:14px 18px; align-items:center; gap:12px; }
+  .topbar button{ background:none;border:1px solid rgba(255,255,255,.4); color:#fff; border-radius:var(--radius); padding:6px 10px; font-size:13px; cursor:pointer; }
+
+  .content{ max-width:900px; margin:0 auto; padding:56px 48px 100px; }
+  section.panel{ display:none; }
+  section.panel.active{ display:block; }
+
+  .eyebrow{ font-size:13px; color:var(--gold); font-weight:600; margin:0 0 10px; }
+  .panel h2{ font-size:31px; margin:0 0 18px; color:var(--navy); font-weight:600; line-height:1.2; }
+  .lede{ font-size:17px; line-height:1.65; color:var(--ink-soft); max-width:680px; margin:0 0 30px; }
+  .panel p{ line-height:1.7; font-size:15.5px; color:var(--ink); }
+  .panel .rule{ border:none; border-top:2px solid var(--gold); width:52px; margin:0 0 26px; }
+
+  .callout{ background:var(--paper); border:1px solid var(--line); border-left:4px solid var(--gold); border-radius:var(--radius); padding:18px 22px; margin:22px 0; font-size:15px; line-height:1.65; }
+  .callout strong{color:var(--navy);}
+  .callout.warn{ border-left-color:var(--warn); }
+
+  .two-col{ display:grid; grid-template-columns:1fr 1fr; gap:20px; margin:26px 0; }
+  .box{ background:var(--paper); border:1px solid var(--line); border-radius:var(--radius); padding:22px 24px; }
+  .box h3{ font-size:15px; margin:0 0 12px; color:var(--navy); font-family:'IBM Plex Sans',sans-serif; font-weight:600; }
+  .box ul{ margin:0; padding-left:0; list-style:none; }
+  .box li{ position:relative; padding-left:20px; margin-bottom:11px; font-size:14.5px; line-height:1.55; color:var(--ink); }
+  .box li::before{ content:""; position:absolute; left:0; top:8px; width:7px; height:7px; background:var(--ok); }
+  .box .tag{ display:inline-block; font-size:11px; font-weight:700; letter-spacing:.04em; color:var(--gold); margin-bottom:8px; }
+  .box .stat{ font-family:'Source Serif 4',serif; font-size:34px; font-weight:700; color:var(--navy); line-height:1; margin-bottom:6px; }
+  .box .stat-label{ font-size:13px; color:var(--ink-soft); line-height:1.4; }
+
+  .info-row{ display:grid; grid-template-columns:250px 1fr; gap:22px; padding:18px 0; border-top:1px solid var(--line); }
+  .info-row .label{ font-weight:600; color:var(--navy); font-size:14.5px; line-height:1.4; }
+  .info-row .desc{ font-size:14.5px; line-height:1.65; color:var(--ink); }
+  .info-row .desc .meta{ display:block; font-size:12.5px; color:var(--ink-soft); margin-top:6px; }
+
+  .plain-list{ margin:0; padding-left:0; list-style:none; }
+  .plain-list li{ position:relative; padding-left:20px; margin-bottom:12px; font-size:15px; line-height:1.6; color:var(--ink); }
+  .plain-list li::before{ content:""; position:absolute; left:0; top:8px; width:7px; height:7px; background:var(--gold); }
+
+  .lettered{ margin:0; padding-left:0; list-style:none; counter-reset:letter; }
+  .lettered li{ position:relative; padding-left:30px; margin-bottom:13px; font-size:15px; line-height:1.6; color:var(--ink); counter-increment:letter; }
+  .lettered li::before{
+    content: counter(letter, lower-alpha) ")"; position:absolute; left:0; top:0;
+    font-weight:700; color:var(--gold); font-size:14px;
+  }
+
+  .stat-grid{ display:grid; grid-template-columns:1fr 1fr 1fr; gap:16px; margin:24px 0; }
+
+  .resource-card{
+    display:flex; align-items:center; justify-content:space-between; gap:22px;
+    background:var(--paper); border:1px solid var(--line); border-radius:var(--radius);
+    padding:20px 24px; margin-bottom:14px;
+  }
+  .resource-text h3{ font-family:'IBM Plex Sans', sans-serif; font-size:15.5px; font-weight:600; color:var(--navy); margin:0 0 6px; }
+  .resource-text p{ margin:0; font-size:14px; line-height:1.55; color:var(--ink-soft); max-width:480px; }
+  .resource-btn{
+    flex-shrink:0; display:inline-block; text-decoration:none; font-size:13.5px; font-weight:600;
+    color:var(--navy); border:1px solid var(--navy); padding:9px 16px; border-radius:var(--radius);
+    white-space:nowrap; transition:background .15s ease, color .15s ease;
+  }
+  .resource-btn:hover{ background:var(--navy); color:#fff; }
+  .resource-btn.pending{ color:var(--ink-soft); border-color:var(--line); cursor:default; }
+  .resource-btn.pending:hover{ background:none; color:var(--ink-soft); }
+
+  @media (max-width: 620px){
+    .resource-card{ flex-direction:column; align-items:flex-start; }
+    .resource-btn{ width:100%; text-align:center; }
+  }
+
+  .footnav{ display:flex; justify-content:space-between; margin-top:52px; padding-top:26px; border-top:1px solid var(--line); }
+  .footnav button{ background:none; border:none; font-family:inherit; cursor:pointer; color:var(--navy); font-size:14.5px; font-weight:600; display:flex; gap:8px; align-items:center; }
+  .footnav button:disabled{ visibility:hidden; }
+  .footnav button:hover{ color:var(--gold); }
+
+  .overlay{ display:none; position:fixed; inset:0; background:rgba(20,32,45,.5); z-index:35; }
+
+  @media (max-width: 880px){
+    .sidebar{ transform:translateX(-100%); }
+    .sidebar.open{ transform:translateX(0); }
+    .main{ margin-left:0; }
+    .topbar{ display:flex; }
+    .overlay.open{ display:block; }
+    .content{ padding:34px 22px 80px; }
+    .two-col{ grid-template-columns:1fr; }
+    .info-row{ grid-template-columns:1fr; gap:6px; }
+    .stat-grid{ grid-template-columns:1fr; }
+    .panel h2{ font-size:25px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="shell">
+  <div class="overlay" id="overlay"></div>
+
+  <aside class="sidebar" id="sidebar">
+    <div class="brand">
+      <div class="mark">INSTITUCIÓN UNIVERSITARIA UNINTEP</div>
+      <h1>Guía para Directores</h1>
+      <p>Etapa Práctica — Práctica Empresarial y Pasantía</p>
+    </div>
+    <nav class="steps" id="stepNav"></nav>
+    <div class="sidebar-foot">Coordinación de Prácticas Empresariales</div>
+  </aside>
+
+  <div class="main">
+    <div class="topbar"><button id="menuBtn" aria-label="Abrir menú">☰ Secciones</button></div>
+
+    <div class="content" id="content">
+
+      <!-- 0 Inicio -->
+      <section class="panel" data-panel="0">
+        <p class="eyebrow">Guía para Directores de Práctica</p>
+        <h2>Etapa Práctica — Práctica Empresarial y Pasantía</h2>
+        <hr class="rule">
+        <p class="lede">Esta guía resume lo que usted, como Director(a), necesita saber para acompañar a un estudiante durante su Etapa Práctica, según el Acuerdo 039 de 2017 y la Guía institucional de Etapa Práctica (P04-G-04).</p>
+        <p>La Etapa Práctica es el requisito de grado en el que el estudiante aplica en el mundo laboral lo aprendido en sus tres primeros semestres. Se desarrolla bajo una de dos modalidades —Pasantía o Práctica Empresarial— y su acompañamiento como Director(a) es una de las piezas clave para que el estudiante complete el proceso con éxito.</p>
+
+        <div class="callout">
+          <strong>Como Director(a)</strong>, usted acompaña, asesora en 3 momentos clave, realiza al menos una visita a la empresa y avala el informe final y la nota que se reporta a la Coordinación.
+        </div>
+
+        <div class="two-col">
+          <div class="box">
+            <h3>Esta guía cubre</h3>
+            <ul>
+              <li>Sus funciones como Director(a) según el reglamento.</li>
+              <li>Las dos modalidades y los requisitos para iniciar.</li>
+              <li>El cronograma de asesorías, visita y evaluación.</li>
+            </ul>
+          </div>
+          <div class="box">
+            <h3>También encontrará</h3>
+            <ul>
+              <li>La estructura completa del informe final.</li>
+              <li>Cómo se evalúa la práctica y la sustentación.</li>
+              <li>Puntos clave: ARL, trabajos destacados y contacto.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- 1 Rol del director -->
+      <section class="panel" data-panel="1">
+        <p class="eyebrow">Sección 1 · Acuerdo 039, Art. Sexto</p>
+        <h2>Su rol como Director(a)</h2>
+        <hr class="rule">
+        <p class="lede">El Director de Práctica Empresarial o Pasantía puede ser un docente de UNINTEP u otro profesional externo que acredite formación o experiencia pertinente. Estas son sus funciones según el reglamento institucional.</p>
+
+        <ol class="lettered">
+          <li>Acompañar y dirigir la actividad práctica del estudiante de acuerdo con la propuesta presentada.</li>
+          <li>Presentar al estudiante un horario de atención para la dirección de sus actividades, tareas y cumplimiento de la propuesta.</li>
+          <li>Programar con el estudiante la fecha y hora para la visita a la empresa asignada.</li>
+          <li>Visitar al menos una (1) vez durante el desarrollo de la práctica o pasantía, entrevistándose con el supervisor o jefe inmediato para verificar permanencia, pertinencia y desempeño.</li>
+          <li>Avalar los informes parciales presentados por el estudiante.</li>
+          <li>Informar a la Coordinación los avances o inconvenientes que se presenten con el estudiante en la entrega de los informes parciales.</li>
+          <li>Asistir a la socialización de la actividad práctica.</li>
+          <li>Entregar a la Coordinación la nota final, de acuerdo con la dirección ejercida y los informes parciales presentados.</li>
+        </ol>
+
+        <div class="callout">
+          Ya no se entrega una carpeta física con estos materiales: el calendario académico está disponible en la sección <strong>"Calendario académico"</strong> de esta guía, y los formatos para el registro de las asesorías, la visita y la evaluación de desempeño se compartirán aquí mismo para su descarga.
+        </div>
+      </section>
+
+      <!-- 2 Modalidades y requisitos -->
+      <section class="panel" data-panel="2">
+        <p class="eyebrow">Sección 2</p>
+        <h2>Modalidades y requisitos</h2>
+        <hr class="rule">
+        <p class="lede">El estudiante desarrolla su Etapa Práctica bajo una de estas dos modalidades.</p>
+
+        <div class="two-col">
+          <div class="box">
+            <span class="tag">MODALIDAD 1</span>
+            <h3>Pasantía</h3>
+            <p style="font-size:14.5px; margin-top:0;">Actividad en una empresa, organización o unidad productiva, con convenio o carta de presentación institucional. Aplica en puesto de trabajo, microempresas, emprendimientos activos por más de 6 meses, empresas públicas u otra empresa que brinde la oportunidad.</p>
+            <ul>
+              <li>Duración: 2 a 3 meses, según pénsum.</li>
+              <li>Se cumple dentro del calendario académico.</li>
+              <li>UNINTEP vincula al estudiante a la ARL.</li>
+            </ul>
+          </div>
+          <div class="box">
+            <span class="tag">MODALIDAD 2</span>
+            <h3>Práctica Empresarial</h3>
+            <p style="font-size:14.5px; margin-top:0;">Vinculación formal mediante contrato de aprendizaje, cuota SENA. La empresa patrocinadora brinda un apoyo de sostenimiento mensual que no constituye salario. El estudiante debe ser mayor de edad.</p>
+            <ul>
+              <li>Duración: hasta 6 meses.</li>
+              <li>Solo se realiza una vez en la vida profesional.</li>
+              <li>Plazo no mayor a 2 años según naturaleza del contrato.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="callout warn">
+          Cualquiera de las dos modalidades debe cumplirse dentro del calendario académico (pasantía) o completar los seis meses de contrato (práctica empresarial). De lo contrario, la Etapa Práctica se aplaza para el próximo semestre.
+        </div>
+
+        <p class="lede" style="margin-top:34px; margin-bottom:14px; font-size:15.5px;">Requisitos que el estudiante debe cumplir para iniciar:</p>
+        <div class="two-col" style="margin-top:0;">
+          <div class="box">
+            <h3>Requisito académico</h3>
+            <p style="font-size:14.5px; margin:0;">Haber cursado y aprobado el 90% del plan de estudios de los semestres I, II y III (paz y salvo académico).</p>
+          </div>
+          <div class="box">
+            <h3>Requisito financiero</h3>
+            <p style="font-size:14.5px; margin:0;">Haber matriculado el IV semestre y pagado el 35,41% adicional del valor de la matrícula correspondiente a Etapa Práctica (paz y salvo financiero).</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 3 Cronograma -->
+      <section class="panel" data-panel="3">
+        <p class="eyebrow">Sección 3</p>
+        <h2>Cronograma de acompañamiento</h2>
+        <hr class="rule">
+        <p class="lede">Estas son las actividades de seguimiento que estructuran su acompañamiento al estudiante, de inicio a cierre.</p>
+        <div id="cronoTable"></div>
+      </section>
+
+      <!-- 4 Calendario -->
+      <section class="panel" data-panel="4">
+        <p class="eyebrow">Sección 4</p>
+        <h2>Calendario académico</h2>
+        <hr class="rule">
+        <p class="lede">Fechas oficiales de la Etapa Práctica: apertura y cierre de formularios, semanas de asesorías y sustentación.</p>
+        <div class="container-wrapper-genially" style="position: relative; min-height: 400px; max-width: 100%;">
+          <video class="loader-genially" autoplay="autoplay" loop="loop" playsinline="playsInline" muted="muted" style="position: absolute;top: 45%;left: 50%;transform: translate(-50%, -50%);width: 80px;height: 80px;margin-bottom: 10%">
+            <source src="https://static.genially.com/resources/loader-default-rebranding.mp4" type="video/mp4" />
+            Su navegador no soporta el elemento de video.
+          </video>
+          <div id="69dcf5b19693883f66834e36" class="genially-embed" style="margin: 0px auto; position: relative; height: auto; width: 100%;"></div>
+        </div>
+      </section>
+
+      <!-- 5 Estructura del informe -->
+      <section class="panel" data-panel="5">
+        <p class="eyebrow">Sección 5 · Guía P04-G-02</p>
+        <h2>Estructura del informe final</h2>
+        <hr class="rule">
+        <p class="lede">El informe final es un informe descriptivo: relata de forma sencilla y ordenada las labores y desempeños de la práctica, con apoyos bibliográficos y bajo normas ICONTEC (sexta edición). Usted, como Director(a), avala su contenido antes de la sustentación.</p>
+        <div id="informeTable"></div>
+      </section>
+
+      <!-- 5 Evaluación y sustentación -->
+      <section class="panel" data-panel="6">
+        <p class="eyebrow">Sección 6</p>
+        <h2>Evaluación y sustentación</h2>
+        <hr class="rule">
+        <p class="lede">La nota mínima aprobatoria es 3.0 sobre 5.0, resultado de tres componentes.</p>
+
+        <div class="stat-grid">
+          <div class="box">
+            <div class="stat">50%</div>
+            <div class="stat-label">Desempeño en la empresa. Evaluado por el supervisor o jefe inmediato.</div>
+          </div>
+          <div class="box">
+            <div class="stat">30%</div>
+            <div class="stat-label">Desempeño académico. Evaluado por usted: cumplimiento de asesorías, informes y actitud frente al proceso.</div>
+          </div>
+          <div class="box">
+            <div class="stat">20%</div>
+            <div class="stat-label">Sustentación. Exposición ante la comunidad académica y jurado calificador.</div>
+          </div>
+        </div>
+
+        <div class="callout warn">
+          Si la nota final es inferior a 3.0, la práctica se considera reprobada: el estudiante debe matricularla nuevamente (académica y financieramente) en el semestre siguiente, y no podrá continuar a quinto semestre ni optar al título mientras no la apruebe.
+        </div>
+
+        <p class="lede" style="margin-top:34px; margin-bottom:14px; font-size:15.5px;">Qué debe llevar el estudiante a la sustentación:</p>
+        <ul class="plain-list">
+          <li>Exposición de 10 minutos, más 5 minutos de preguntas del jurado calificador.</li>
+          <li>Informe impreso, argollado en pasta blanda.</li>
+          <li>Presentación (diapositivas) guardada en una memoria USB.</li>
+          <li>Presentación personal formal y puntualidad — es su momento profesional.</li>
+        </ul>
+      </section>
+
+      <!-- 7 Recursos -->
+      <section class="panel" data-panel="7">
+        <p class="eyebrow">Sección 7</p>
+        <h2>Recursos descargables</h2>
+        <hr class="rule">
+        <p class="lede">Formatos y enlaces de consulta obligatoria para el acompañamiento.</p>
+
+        <div class="resource-card">
+          <div class="resource-text">
+            <h3>Asignación académica (por sede y programa)</h3>
+            <p>Consulte qué Director tiene a cargo cada estudiante. Use los filtros de la hoja por Sede y Programa para ubicar su asignación.</p>
+          </div>
+          <a class="resource-btn" href="https://docs.google.com/spreadsheets/d/15Er33E367BZi7dNT0HrDf7SvoXXrJA8c/edit?usp=sharing&ouid=101233569868023663684&rtpof=true&sd=true" target="_blank" rel="noopener">Abrir asignación ↗</a>
+        </div>
+
+        <div class="resource-card">
+          <div class="resource-text">
+            <h3>Plantilla del informe final</h3>
+            <p>Documento base con la estructura NTC 1486 que el estudiante debe usar para su informe.</p>
+          </div>
+          <a class="resource-btn pending" href="#" onclick="return false;">Enlace pendiente</a>
+        </div>
+
+        <div class="resource-card">
+          <div class="resource-text">
+            <h3>Formulario de impacto</h3>
+            <p>Para notificar a la Coordinación un trabajo que se haya destacado de manera sobresaliente.</p>
+          </div>
+          <a class="resource-btn pending" href="#" onclick="return false;">Enlace pendiente</a>
+        </div>
+
+        <div class="resource-card">
+          <div class="resource-text">
+            <h3>Reporte de asesorías</h3>
+            <p>Formato para reportar cada asesoría realizada con el estudiante durante la Etapa Práctica.</p>
+          </div>
+          <a class="resource-btn" href="https://forms.gle/qBzgnkr6Wzb8idSGA" target="_blank" rel="noopener">Abrir formulario ↗</a>
+        </div>
+      </section>
+
+      <!-- 8 Puntos clave -->
+      <section class="panel" data-panel="8">
+        <p class="eyebrow">Sección 8</p>
+        <h2>Puntos clave y contacto</h2>
+        <hr class="rule">
+        <p class="lede">Algunos puntos operativos que conviene tener presentes durante el acompañamiento.</p>
+
+        <div class="callout">
+          <strong>ARL en pasantía por oportunidad.</strong> UNINTEP asume la afiliación a la ARL de los estudiantes que realizan su Pasantía por oportunidad.
+        </div>
+
+        <div class="callout">
+          <strong>Trabajos destacados.</strong> Si el trabajo del estudiante se destaca de manera sobresaliente, puede notificarlo a la Coordinación a través del formulario de impacto o del formato Word disponible para ello, en la sección <strong>"Recursos descargables"</strong> de esta guía.
+        </div>
+
+        <div class="callout warn">
+          <strong>Cambios durante el proceso.</strong> Un cambio de sitio, de Director o del tema de la propuesta solo procede previo estudio y aval del Director. Si la empresa cierra o cancela el contrato, el estudiante debe informar de inmediato a la Coordinación; no debe abandonar el proceso sin comunicarlo primero.
+        </div>
+
+        <p class="lede" style="margin-top:30px; margin-bottom:14px; font-size:15.5px;">Otros puntos a tener presentes:</p>
+        <ul class="plain-list">
+          <li>El estudiante cuenta con un plazo máximo de un (1) año para terminar el proceso desde que lo inicia.</li>
+          <li>El trabajo puede realizarse en grupo cuando la magnitud o profundidad del tema lo requiera, previo aval de la dirección de la Unidad.</li>
+          <li>Todo el proceso vive en el campus virtual (Moodle): propuesta, informes y comunicación con la Coordinación.</li>
+        </ul>
+
+        <div class="callout" style="margin-top:30px;">
+          <strong>Contacto Coordinación de Prácticas:</strong> pasantias@unintep.edu.co<br>
+          Al escribir, incluya siempre: nombre completo · cédula · programa · municipio.
+        </div>
+      </section>
+
+      <div class="footnav">
+        <button id="prevBtn">← Anterior</button>
+        <button id="nextBtn">Siguiente →</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+/* ---------------- DATA ---------------- */
+var STEPS = [
+  "Inicio",
+  "Su rol como Director(a)",
+  "Modalidades y requisitos",
+  "Cronograma de acompañamiento",
+  "Calendario académico",
+  "Estructura del informe final",
+  "Evaluación y sustentación",
+  "Recursos descargables",
+  "Puntos clave y contacto"
+];
+
+var CRONOGRAMA = [
+  ["Propuesta", "Presentación de actividades y propuesta de ejercicio práctico en el puesto asignado.", "Estudiante", "Una vez, al iniciar"],
+  ["Asesoría 1 — Propuesta", "Revisión y organización de objetivos con el Director.", "Estudiante + Director", "Al iniciar"],
+  ["Asesoría 2 — Informe parcial", "Avance del informe con actividades; el Director devuelve con observaciones.", "Estudiante + Director", "Entre la 5ª y 6ª semana"],
+  ["Asesoría 3 — Informe final", "Reporte completo de la experiencia.", "Estudiante + Director", "Al finalizar"],
+  ["Visita a la empresa", "Evaluación del avance por parte del Director en la empresa.", "Director", "Mínimo 1 vez"],
+  ["Evaluación de la empresa", "Formato de evaluación de desempeño práctico diligenciado.", "Director + Jefe inmediato", "1 semana antes de la sustentación"]
+];
+
+var INFORME = [
+  ["Introducción", "Presentación del trabajo: importancia, antecedentes y hasta dónde se quiere llegar. No debe confundirse con un resumen ni anticipar conclusiones. Ocupa 1 página."],
+  ["1. Justificación", "Por qué y para qué se hizo el trabajo, y a quiénes beneficia, en el ámbito social y académico. Incluye la metodología usada. Ocupa 1 página."],
+  ["2.1 Objetivo general", "Un solo objetivo, con verbo en infinitivo + finalidad, que recoge la integralidad de la práctica (qué, dónde, con quién, para qué)."],
+  ["2.2 Objetivos específicos", "Tres (3) objetivos específicos por cada objetivo general, con verbo en infinitivo + finalidad, escritos en el orden en que se realizan."],
+  ["3.1 Presentación de la empresa", "Ubicación, historia, sector, misión, visión y estructura organizacional; condiciones o debilidades halladas en el puesto de trabajo."],
+  ["3.2 Desarrollo de las actividades", "Descripción de todas las labores o tareas realizadas, correspondientes al tema de la práctica y al cumplimiento de los objetivos."],
+  ["3.3 Otras labores", "Labores adicionales no comprendidas en la propuesta inicial, si las hubo. No debe ser extenso: máximo 2 a 5 páginas."],
+  ["4. Resultados", "Logros, aciertos y desaciertos alcanzados; evidencian el cumplimiento del objetivo general."],
+  ["5. Conclusión", "Una sola conclusión (no fragmentada) que sintetiza la práctica y responde al objetivo general. Ocupa 1 página."],
+  ["6. Recomendaciones", "Enumeradas, en 1 página, dirigidas a tres públicos: la empresa, UNINTEP y los próximos practicantes."],
+  ["Bibliografía", "De inclusión obligatoria. Orden alfabético según normas ICONTEC: libros, enciclopedias, revistas, periódicos, folletos, entrevistas/encuestas, webgrafía."],
+  ["Anexos", "Fotografías, cuadros descriptivos, manuales, catálogos, videos u otros soportes, debidamente explicados y justificados."]
+];
+
+/* ---------------- RENDER ---------------- */
+var stepNavEl = document.getElementById('stepNav');
+for (var i = 0; i < STEPS.length; i++) {
+  (function(i){
+    var btn = document.createElement('button');
+    btn.className = 'step-btn';
+    btn.setAttribute('data-step', i);
+    btn.innerHTML = '<span class="num">' + (i+1) + '</span><span>' + STEPS[i] + '</span>';
+    btn.addEventListener('click', function(){ goTo(i); });
+    stepNavEl.appendChild(btn);
+  })(i);
+}
+
+var cronoTableEl = document.getElementById('cronoTable');
+for (var c = 0; c < CRONOGRAMA.length; c++) {
+  var row = CRONOGRAMA[c];
+  var div = document.createElement('div');
+  div.className = 'info-row';
+  div.innerHTML = '<div class="label">' + row[0] + '</div><div class="desc">' + row[1] +
+    '<span class="meta">Responsable: ' + row[2] + ' &nbsp;·&nbsp; Cuándo: ' + row[3] + '</span></div>';
+  cronoTableEl.appendChild(div);
+}
+
+var informeTableEl = document.getElementById('informeTable');
+for (var m = 0; m < INFORME.length; m++) {
+  var irow = INFORME[m];
+  var idiv = document.createElement('div');
+  idiv.className = 'info-row';
+  idiv.innerHTML = '<div class="label">' + irow[0] + '</div><div class="desc">' + irow[1] + '</div>';
+  informeTableEl.appendChild(idiv);
+}
+
+/* ---------------- NAVIGATION ---------------- */
+var current = 0;
+var panelEls = document.querySelectorAll('.panel');
+var navBtnEls = document.querySelectorAll('.step-btn');
+var CALENDAR_INDEX = 4;
+var geniallyLoaded = false;
+
+function loadGeniallyEmbed(){
+  if (geniallyLoaded) return;
+  geniallyLoaded = true;
+  var js = document.createElement('script');
+  js.id = 'genially-embed-js';
+  js.async = true;
+  js.src = 'https://view.genially.com/static/embed/embed.js';
+  document.body.appendChild(js);
+}
+
+function goTo(i){
+  current = Math.max(0, Math.min(STEPS.length - 1, i));
+  for (var p = 0; p < panelEls.length; p++) {
+    var match = (parseInt(panelEls[p].getAttribute('data-panel'), 10) === current);
+    panelEls[p].classList.toggle('active', match);
+  }
+  for (var n = 0; n < navBtnEls.length; n++) {
+    var navMatch = (parseInt(navBtnEls[n].getAttribute('data-step'), 10) === current);
+    navBtnEls[n].classList.toggle('active', navMatch);
+  }
+  document.getElementById('prevBtn').disabled = (current === 0);
+  document.getElementById('nextBtn').textContent = (current === STEPS.length - 1) ? 'Volver al inicio →' : 'Siguiente →';
+  document.getElementById('content').scrollTop = 0;
+  window.scrollTo(0,0);
+  closeSidebar();
+  if (current === CALENDAR_INDEX) { loadGeniallyEmbed(); }
+}
+document.getElementById('prevBtn').addEventListener('click', function(){ goTo(current - 1); });
+document.getElementById('nextBtn').addEventListener('click', function(){
+  goTo(current === STEPS.length - 1 ? 0 : current + 1);
+});
+
+/* Mobile sidebar */
+var sidebarEl = document.getElementById('sidebar');
+var overlayEl = document.getElementById('overlay');
+function openSidebar(){ sidebarEl.classList.add('open'); overlayEl.classList.add('open'); }
+function closeSidebar(){ sidebarEl.classList.remove('open'); overlayEl.classList.remove('open'); }
+document.getElementById('menuBtn').addEventListener('click', openSidebar);
+overlayEl.addEventListener('click', closeSidebar);
+
+goTo(0);
+</script>
+</body>
+</html>
