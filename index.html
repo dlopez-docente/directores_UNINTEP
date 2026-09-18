@@ -95,6 +95,24 @@
   .info-row .desc{ font-size:14.5px; line-height:1.65; color:var(--ink); }
   .info-row .desc .meta{ display:block; font-size:12.5px; color:var(--ink-soft); margin-top:6px; }
 
+  .progress-wrap{ display:flex; align-items:center; gap:14px; margin-bottom:26px; }
+  .progress-track{ flex:1; height:8px; background:var(--line); border-radius:4px; overflow:hidden; }
+  .progress-fill{ height:100%; width:0%; background:var(--gold); transition:width .25s ease; }
+  .progress-label{ font-size:13.5px; color:var(--ink-soft); white-space:nowrap; font-weight:600; }
+  .check-item{ display:flex; gap:14px; align-items:flex-start; padding:16px 0; border-top:1px solid var(--line); cursor:pointer; }
+  .check-item input{ margin-top:3px; width:17px; height:17px; accent-color:var(--navy); cursor:pointer; flex-shrink:0; }
+  .check-item .check-text{ font-size:15px; line-height:1.55; color:var(--ink); }
+  .check-item .check-text strong{ color:var(--navy); display:block; margin-bottom:3px; }
+  .check-item .check-text .meta{ display:block; font-size:12.5px; color:var(--ink-soft); margin-top:6px; }
+  .check-item.checked .check-text strong,
+  .check-item.checked .check-text{ color:var(--ink-soft); }
+  .check-item.checked .check-text strong{ text-decoration:line-through; text-decoration-color:var(--line); }
+  .reset-btn{
+    margin-top:22px; background:none; border:1px solid var(--line); color:var(--ink-soft);
+    padding:9px 16px; border-radius:var(--radius); font-family:inherit; font-size:13.5px; cursor:pointer;
+  }
+  .reset-btn:hover{ border-color:var(--navy); color:var(--navy); }
+
   .plain-list{ margin:0; padding-left:0; list-style:none; }
   .plain-list li{ position:relative; padding-left:20px; margin-bottom:12px; font-size:15px; line-height:1.6; color:var(--ink); }
   .plain-list li::before{ content:""; position:absolute; left:0; top:8px; width:7px; height:7px; background:var(--gold); }
@@ -277,8 +295,13 @@
         <p class="eyebrow">Sección 3</p>
         <h2>Cronograma de acompañamiento</h2>
         <hr class="rule">
-        <p class="lede">Estas son las actividades de seguimiento que estructuran su acompañamiento al estudiante, de inicio a cierre.</p>
+        <p class="lede">Estas son las actividades de seguimiento que estructuran su acompañamiento al estudiante, de inicio a cierre. Márquelas a medida que las va completando.</p>
+        <div class="progress-wrap">
+          <div class="progress-track"><div class="progress-fill" id="cronoProgressFill"></div></div>
+          <div class="progress-label" id="cronoProgressLabel">0 / 0</div>
+        </div>
         <div id="cronoTable"></div>
+        <button class="reset-btn" id="resetCrono">Reiniciar checklist</button>
       </section>
 
       <!-- 4 Calendario -->
@@ -287,16 +310,28 @@
         <h2>Calendario académico</h2>
         <hr class="rule">
         <p class="lede">Fechas oficiales de la Etapa Práctica: apertura y cierre de formularios, semanas de asesorías y sustentación.</p>
-        <div style="width: 100%;"><div style="position: relative; padding-bottom: 56.25%; padding-top: 0; height: 0;"><iframe title="Calendario Etapa Práctica 2026 - 2" frameborder="0" width="1200" height="675" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" src="https://view.genially.com/69dcf5b19693883f66834e36" type="text/html" allowscriptaccess="always" allowfullscreen="true" scrolling="yes" allownetworking="all"></iframe> </div> </div>
+        <div class="container-wrapper-genially" style="position: relative; min-height: 400px; max-width: 100%;">
+          <video class="loader-genially" autoplay="autoplay" loop="loop" playsinline="playsInline" muted="muted" style="position: absolute;top: 45%;left: 50%;transform: translate(-50%, -50%);width: 80px;height: 80px;margin-bottom: 10%">
+            <source src="https://static.genially.com/resources/loader-default-rebranding.mp4" type="video/mp4" />
+            Su navegador no soporta el elemento de video.
+          </video>
+          <div id="69dcf5b19693883f66834e36" class="genially-embed" style="margin: 0px auto; position: relative; height: auto; width: 100%;"></div>
+        </div>
       </section>
 
       <!-- 5 Asignación académica -->
       <section class="panel" data-panel="5">
         <p class="eyebrow">Sección 5</p>
-        <h2>Asignación académica</h2>
+        <h2>Asignación académica y propuesta</h2>
         <hr class="rule">
-        <p class="lede">Consulte aquí qué Director tiene a cargo cada estudiante, por sede y programa.</p>
-        <div style="width: 100%;"><div style="position: relative; padding-bottom: 56.25%; padding-top: 0; height: 0;"><iframe title="Designación Docente Práctica 2025 - 2" frameborder="0" width="1200" height="675" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" src="https://view.genially.com/689e4a3276dd2a8968e15833" type="text/html" allowscriptaccess="always" allowfullscreen="true" scrolling="yes" allownetworking="all"></iframe> </div> </div>
+        <p class="lede">Consulte aquí qué Director tiene a cargo cada estudiante, por sede y programa, y revise la propuesta que presentó.</p>
+        <div class="container-wrapper-genially" style="position: relative; min-height: 400px; max-width: 100%;">
+          <video class="loader-genially" autoplay="autoplay" loop="loop" playsinline="playsInline" muted="muted" style="position: absolute;top: 45%;left: 50%;transform: translate(-50%, -50%);width: 80px;height: 80px;margin-bottom: 10%">
+            <source src="https://static.genially.com/resources/loader-default-rebranding.mp4" type="video/mp4" />
+            Su navegador no soporta el elemento de video.
+          </video>
+          <div id="689e4a3276dd2a8968e15833" class="genially-embed" style="margin: 0px auto; position: relative; height: auto; width: 100%;"></div>
+        </div>
       </section>
 
       <!-- 6 Estructura del informe -->
@@ -376,10 +411,10 @@
 
         <div class="resource-card">
           <div class="resource-text">
-            <h3>Formulario de impacto</h3>
-            <p>Para notificar a la Coordinación un trabajo que se haya destacado de manera sobresaliente.</p>
+            <h3>Formularios de evaluación</h3>
+            <p>Formatos para el registro de las asesorías, la visita y la evaluación de desempeño práctico.</p>
           </div>
-          <a class="resource-btn pending" href="#" onclick="return false;">Enlace pendiente</a>
+          <a class="resource-btn" href="https://view.genially.com/6aad951d5975d6d8ff5f94fb" target="_blank" rel="noopener">Abrir formularios ↗</a>
         </div>
       </section>
 
@@ -395,7 +430,7 @@
         </div>
 
         <div class="callout">
-          <strong>Trabajos destacados.</strong> Si el trabajo del estudiante se destaca de manera sobresaliente, puede notificarlo a la Coordinación a través del formulario de impacto o del formato Word disponible para ello, en la sección <strong>"Recursos descargables"</strong> de esta guía.
+          <strong>Trabajos destacados.</strong> Si el trabajo del estudiante se destaca de manera sobresaliente, puede notificarlo a la Coordinación a través del formulario de impacto o del formato Word disponible para ello.
         </div>
 
         <div class="callout warn">
@@ -431,7 +466,7 @@ var STEPS = [
   "Modalidades y requisitos",
   "Cronograma de acompañamiento",
   "Calendario académico",
-  "Asignación académica",
+  "Asignación académica y propuesta",
   "Estructura del informe final",
   "Evaluación y sustentación",
   "Recursos descargables",
@@ -439,12 +474,13 @@ var STEPS = [
 ];
 
 var CRONOGRAMA = [
-  ["Propuesta", "Presentación de actividades y propuesta de ejercicio práctico en el puesto asignado.", "Estudiante", "Una vez, al iniciar"],
+  ["Propuesta", "Presentación de actividades y propuesta de ejercicio práctico en el puesto asignado. Se consulta en la sección 6, \"Asignación académica y propuesta\", de esta guía.", "Estudiante", "Una vez, al iniciar"],
   ["Asesoría 1 — Propuesta", "Revisión y organización de objetivos con el Director.", "Estudiante + Director", "Al iniciar"],
   ["Asesoría 2 — Informe parcial", "Avance del informe con actividades; el Director devuelve con observaciones.", "Estudiante + Director", "Entre la 5ª y 6ª semana"],
   ["Asesoría 3 — Informe final", "Reporte completo de la experiencia.", "Estudiante + Director", "Al finalizar"],
   ["Visita a la empresa", "Evaluación del avance por parte del Director en la empresa.", "Director", "Mínimo 1 vez"],
-  ["Evaluación de la empresa", "Formato de evaluación de desempeño práctico diligenciado.", "Director + Jefe inmediato", "1 semana antes de la sustentación"]
+  ["Evaluación de la empresa", "Formato de evaluación de desempeño práctico diligenciado.", "Director + Jefe inmediato", "1 semana antes de la sustentación"],
+  ["Acompañamiento el día de la sustentación", "Asista a la sustentación del estudiante ante el jurado calificador.", "Director", "Día de la sustentación"]
 ];
 
 var INFORME = [
@@ -476,14 +512,34 @@ for (var i = 0; i < STEPS.length; i++) {
 }
 
 var cronoTableEl = document.getElementById('cronoTable');
-for (var c = 0; c < CRONOGRAMA.length; c++) {
-  var row = CRONOGRAMA[c];
-  var div = document.createElement('div');
-  div.className = 'info-row';
-  div.innerHTML = '<div class="label">' + row[0] + '</div><div class="desc">' + row[1] +
-    '<span class="meta">Responsable: ' + row[2] + ' &nbsp;·&nbsp; Cuándo: ' + row[3] + '</span></div>';
-  cronoTableEl.appendChild(div);
+function renderCrono(){
+  cronoTableEl.innerHTML = '';
+  for (var c = 0; c < CRONOGRAMA.length; c++) {
+    var row = CRONOGRAMA[c];
+    var label = document.createElement('label');
+    label.className = 'check-item';
+    label.innerHTML = '<input type="checkbox" data-i="' + c + '">' +
+      '<span class="check-text"><strong>' + row[0] + '</strong>' + row[1] +
+      '<span class="meta">Responsable: ' + row[2] + ' &nbsp;·&nbsp; Cuándo: ' + row[3] + '</span></span>';
+    cronoTableEl.appendChild(label);
+  }
+  var boxes = cronoTableEl.querySelectorAll('input');
+  for (var b = 0; b < boxes.length; b++) {
+    boxes[b].addEventListener('change', function(){
+      this.parentNode.classList.toggle('checked', this.checked);
+      updateCronoProgress();
+    });
+  }
+  updateCronoProgress();
 }
+function updateCronoProgress(){
+  var boxes = cronoTableEl.querySelectorAll('input');
+  var checked = cronoTableEl.querySelectorAll('input:checked').length;
+  document.getElementById('cronoProgressFill').style.width = (boxes.length ? (checked / boxes.length * 100) : 0) + '%';
+  document.getElementById('cronoProgressLabel').textContent = checked + ' / ' + boxes.length;
+}
+document.getElementById('resetCrono').addEventListener('click', renderCrono);
+renderCrono();
 
 var informeTableEl = document.getElementById('informeTable');
 for (var m = 0; m < INFORME.length; m++) {
