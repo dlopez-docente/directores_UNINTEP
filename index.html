@@ -163,6 +163,22 @@
 
   .overlay{ display:none; position:fixed; inset:0; background:rgba(20,32,45,.5); z-index:35; }
 
+  /* Pantalla de acceso */
+  body.locked .shell{ display:none; }
+  .gate{ display:none; min-height:100vh; align-items:center; justify-content:center; padding:24px;
+    background:linear-gradient(180deg, var(--navy) 0%, var(--navy-deep) 100%); }
+  body.locked .gate{ display:flex; }
+  .gate-card{ background:var(--paper); border-radius:var(--radius); padding:36px 34px; width:100%; max-width:400px; border-top:4px solid var(--gold); }
+  .gate-card .mark{ font-size:12px; letter-spacing:.06em; color:var(--gold); font-weight:600; margin-bottom:8px; }
+  .gate-card h1{ font-size:24px; color:var(--navy); margin:0 0 8px; font-weight:600; }
+  .gate-card p{ font-size:14.5px; line-height:1.55; color:var(--ink-soft); margin:0 0 22px; }
+  .gate-card label{ display:block; font-size:13.5px; font-weight:600; color:var(--navy); margin-bottom:8px; }
+  .gate-card input{ width:100%; padding:11px 12px; font-family:inherit; font-size:15px; border:1px solid var(--line); border-radius:var(--radius); background:#fff; color:var(--ink); }
+  .gate-card input:focus{ outline:2px solid var(--gold); outline-offset:1px; border-color:var(--gold); }
+  .gate-card button{ margin-top:16px; width:100%; padding:12px; font-family:inherit; font-size:15px; font-weight:600; background:var(--navy); color:#fff; border:none; border-radius:var(--radius); cursor:pointer; }
+  .gate-card button:hover{ background:var(--navy-deep); }
+  .gate-error{ min-height:20px; margin-top:12px; font-size:13.5px; color:var(--warn); }
+
   @media (max-width: 880px){
     .sidebar{ transform:translateX(-100%); }
     .sidebar.open{ transform:translateX(0); }
@@ -177,7 +193,19 @@
   }
 </style>
 </head>
-<body>
+<body class="locked">
+
+<div class="gate" id="gate">
+  <form class="gate-card" id="gateForm" autocomplete="off">
+    <div class="mark">INSTITUCIÓN UNIVERSITARIA UNINTEP</div>
+    <h1>Guía para Directores</h1>
+    <p>Etapa Práctica. Ingrese la clave de acceso para continuar.</p>
+    <label for="gateInput">Clave de acceso</label>
+    <input type="password" id="gateInput" autofocus>
+    <button type="submit">Ingresar</button>
+    <div class="gate-error" id="gateError" role="alert"></div>
+  </form>
+</div>
 
 <div class="shell">
   <div class="overlay" id="overlay"></div>
@@ -458,6 +486,7 @@
 
         <div class="callout" style="margin-top:30px;">
           <strong>Contacto Coordinación de Prácticas:</strong> pasantias@unintep.edu.co<br>
+          Al escribir, incluya siempre: nombre completo · cédula · programa · municipio.
         </div>
       </section>
 
@@ -471,6 +500,30 @@
 </div>
 
 <script>
+/* ---------------- ACCESO ---------------- */
+(function(){
+  var KEY_HASH = '5m3eqi';           /* clave: Docentes */
+  var SESSION_KEY = 'guiaDirectoresOK';
+  function h(s){ var x = 5381; for (var i = 0; i < s.length; i++){ x = ((x << 5) + x + s.charCodeAt(i)) | 0; } return (x >>> 0).toString(36); }
+  function unlock(){ document.body.classList.remove('locked'); }
+
+  try { if (sessionStorage.getItem(SESSION_KEY) === '1') { unlock(); } } catch(e) {}
+
+  document.getElementById('gateForm').addEventListener('submit', function(ev){
+    ev.preventDefault();
+    var input = document.getElementById('gateInput');
+    var val = input.value.trim().toLowerCase();
+    if (h(val) === KEY_HASH) {
+      try { sessionStorage.setItem(SESSION_KEY, '1'); } catch(e) {}
+      unlock();
+    } else {
+      document.getElementById('gateError').textContent = 'Clave incorrecta. Verifíquela e intente de nuevo.';
+      input.value = '';
+      input.focus();
+    }
+  });
+})();
+
 /* ---------------- DATA ---------------- */
 var STEPS = [
   "Inicio",
