@@ -76,6 +76,9 @@
   .panel p{ line-height:1.7; font-size:15.5px; color:var(--ink); }
   .panel .rule{ border:none; border-top:2px solid var(--gold); width:52px; margin:0 0 26px; }
 
+  .sub-title{ font-family:'Source Serif 4', serif; font-size:21px; font-weight:600; color:var(--navy); margin:40px 0 8px; }
+  .sub-lede{ font-size:15px; line-height:1.6; color:var(--ink-soft); margin:0 0 18px; max-width:680px; }
+
   .callout{ background:var(--paper); border:1px solid var(--line); border-left:4px solid var(--gold); border-radius:var(--radius); padding:18px 22px; margin:22px 0; font-size:15px; line-height:1.65; }
   .callout strong{color:var(--navy);}
   .callout.warn{ border-left-color:var(--warn); }
@@ -139,12 +142,18 @@
     white-space:nowrap; transition:background .15s ease, color .15s ease;
   }
   .resource-btn:hover{ background:var(--navy); color:#fff; }
-  .resource-btn.pending{ color:var(--ink-soft); border-color:var(--line); cursor:default; }
-  .resource-btn.pending:hover{ background:none; color:var(--ink-soft); }
+
+  /* Contenedor para embebidos (Genially / Google Forms) */
+  .embed-frame{ background:var(--paper); border:1px solid var(--line); border-radius:var(--radius); padding:8px; }
+  .form-embed{ background:var(--paper); border:1px solid var(--line); border-radius:var(--radius); overflow:hidden; }
+  .form-embed iframe{ display:block; width:100%; height:2568px; border:0; }
+  .embed-note{ font-size:13px; color:var(--ink-soft); margin-top:12px; line-height:1.5; }
+  .embed-note a{ color:var(--navy); font-weight:600; }
 
   @media (max-width: 620px){
     .resource-card{ flex-direction:column; align-items:flex-start; }
     .resource-btn{ width:100%; text-align:center; }
+    .form-embed iframe{ height:3000px; }
   }
 
   .footnav{ display:flex; justify-content:space-between; margin-top:52px; padding-top:26px; border-top:1px solid var(--line); }
@@ -194,7 +203,7 @@
         <h2>Etapa Práctica — Práctica Empresarial y Pasantía</h2>
         <hr class="rule">
         <p class="lede">Esta guía resume lo que usted, como Director(a), necesita saber para acompañar a un estudiante durante su Etapa Práctica, según el Acuerdo 039 de 2017 y la Guía institucional de Etapa Práctica (P04-G-04).</p>
-        <p>La Etapa Práctica es el requisito de grado en el que el estudiante aplica en el mundo laboral lo aprendido en sus tres primeros semestres. Se desarrolla bajo una de dos modalidades —Pasantía o Práctica Empresarial— y su acompañamiento como Director(a) es una de las piezas clave para que el estudiante complete el proceso con éxito.</p>
+        <p>La Etapa Práctica es el requisito de grado en el que el estudiante aplica en el mundo laboral lo aprendido en sus tres primeros semestres. Se desarrolla bajo una de dos modalidades (Pasantía o Práctica Empresarial) y su acompañamiento como Director(a) es una de las piezas clave para que el estudiante complete el proceso con éxito.</p>
 
         <div class="callout">
           <strong>Como Director(a)</strong>, usted acompaña, asesora en 3 momentos clave, realiza al menos una visita a la empresa y avala el informe final y la nota que se reporta a la Coordinación.
@@ -207,13 +216,15 @@
               <li>Sus funciones como Director(a) según el reglamento.</li>
               <li>Las dos modalidades y los requisitos para iniciar.</li>
               <li>El cronograma de asesorías, visita y evaluación.</li>
+              <li>La estructura completa del informe final.</li>
             </ul>
           </div>
           <div class="box">
             <h3>También encontrará</h3>
             <ul>
-              <li>La estructura completa del informe final.</li>
               <li>Cómo se evalúa la práctica y la sustentación.</li>
+              <li>Plantillas y formatos de evaluación.</li>
+              <li>El registro de control de asesorías, sin salir de la guía.</li>
               <li>Puntos clave: ARL, trabajos destacados y contacto.</li>
             </ul>
           </div>
@@ -239,7 +250,7 @@
         </ol>
 
         <div class="callout">
-          El calendario académico está disponible en la sección <strong>"Calendario académico"</strong> de esta guía, y los formatos para el registro de las asesorías, la visita y la evaluación de desempeño se compartirán aquí mismo para su descarga.
+          El calendario está en la sección <strong>"Calendario académico"</strong>; los formatos de visita y evaluación de desempeño, en <strong>"Plantillas y formatos de evaluación"</strong>; y cada asesoría se registra en <strong>"Control de asesorías"</strong>.
         </div>
       </section>
 
@@ -310,7 +321,9 @@
         <h2>Calendario académico</h2>
         <hr class="rule">
         <p class="lede">Fechas oficiales de la Etapa Práctica: apertura y cierre de formularios, semanas de asesorías y sustentación.</p>
-        <div style="width: 100%;"><div style="position: relative; padding-bottom: 56.25%; padding-top: 0; height: 0;"><iframe title="Calendario Etapa Práctica 2026 - 2" frameborder="0" width="1200" height="675" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" src="https://view.genially.com/69dcf5b19693883f66834e36" type="text/html" allowscriptaccess="always" allowfullscreen="true" scrolling="yes" allownetworking="all"></iframe> </div> </div>
+        <div class="embed-frame">
+          <div style="width: 100%;"><div style="position: relative; padding-bottom: 56.25%; padding-top: 0; height: 0;"><iframe title="Calendario Etapa Práctica 2026 - 2" frameborder="0" width="1200" height="675" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" src="https://view.genially.com/69dcf5b19693883f66834e36" type="text/html" allowscriptaccess="always" allowfullscreen="true" scrolling="yes" allownetworking="all"></iframe> </div> </div>
+        </div>
       </section>
 
       <!-- 5 Asignación académica -->
@@ -319,7 +332,9 @@
         <h2>Asignación académica y propuesta</h2>
         <hr class="rule">
         <p class="lede">Consulte aquí qué Director tiene a cargo cada estudiante, por sede y programa, y revise la propuesta que presentó.</p>
-        <div style="width: 100%;"><div style="position: relative; padding-bottom: 56.25%; padding-top: 0; height: 0;"><iframe title="Designación Docente Práctica 2025 - 2" frameborder="0" width="1200" height="675" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" src="https://view.genially.com/689e4a3276dd2a8968e15833" type="text/html" allowscriptaccess="always" allowfullscreen="true" scrolling="yes" allownetworking="all"></iframe> </div> </div>
+        <div class="embed-frame">
+          <div style="width: 100%;"><div style="position: relative; padding-bottom: 56.25%; padding-top: 0; height: 0;"><iframe title="Designación Docente Práctica 2025 - 2" frameborder="0" width="1200" height="675" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" src="https://view.genially.com/689e4a3276dd2a8968e15833" type="text/html" allowscriptaccess="always" allowfullscreen="true" scrolling="yes" allownetworking="all"></iframe> </div> </div>
+        </div>
       </section>
 
       <!-- 6 Estructura del informe -->
@@ -331,7 +346,7 @@
         <div id="informeTable"></div>
       </section>
 
-      <!-- 5 Evaluación y sustentación -->
+      <!-- 7 Evaluación y sustentación -->
       <section class="panel" data-panel="7">
         <p class="eyebrow">Sección 7</p>
         <h2>Evaluación y sustentación</h2>
@@ -362,16 +377,19 @@
           <li>Exposición de 10 minutos, más 5 minutos de preguntas del jurado calificador.</li>
           <li>Informe impreso, argollado en pasta blanda.</li>
           <li>Presentación (diapositivas) guardada en una memoria USB.</li>
-          <li>Presentación personal formal y puntualidad — es su momento profesional.</li>
+          <li>Presentación personal formal y puntualidad (es su momento profesional).</li>
         </ul>
       </section>
 
-      <!-- 8 Recursos -->
+      <!-- 8 Plantillas y formatos de evaluación -->
       <section class="panel" data-panel="8">
         <p class="eyebrow">Sección 8</p>
-        <h2>Recursos descargables</h2>
+        <h2>Plantillas y formatos de evaluación</h2>
         <hr class="rule">
-        <p class="lede">Formatos y enlaces de consulta obligatoria para el acompañamiento.</p>
+        <p class="lede">Plantillas institucionales para el estudiante y formatos de evaluación que usted diligencia durante el acompañamiento.</p>
+
+        <h3 class="sub-title" style="margin-top:0;">Plantillas</h3>
+        <p class="sub-lede">Compártalas con el estudiante al inicio del proceso.</p>
 
         <div class="resource-card">
           <div class="resource-text">
@@ -389,26 +407,33 @@
           <a class="resource-btn" href="https://docs.google.com/presentation/d/1V9fchBrtcILK_WMw5RxdXdKKRoUiCdag/export/pptx" target="_blank" rel="noopener">Descargar ↓</a>
         </div>
 
-        <div class="resource-card">
-          <div class="resource-text">
-            <h3>Reporte de asesorías</h3>
-            <p>Formato para reportar cada asesoría realizada con el estudiante durante la Etapa Práctica.</p>
-          </div>
-          <a class="resource-btn" href="https://forms.gle/gyU9UQF4Xfi3Sp7u7" target="_blank" rel="noopener">Abrir formulario ↗</a>
-        </div>
-
-        <div class="resource-card">
-          <div class="resource-text">
-            <h3>Formularios de evaluación</h3>
-            <p>Formatos para el registro de las asesorías, la visita y la evaluación de desempeño práctico.</p>
-          </div>
-          <a class="resource-btn" href="https://view.genially.com/6aad951d5975d6d8ff5f94fb" target="_blank" rel="noopener">Abrir formularios ↗</a>
+        <h3 class="sub-title">Formatos de evaluación</h3>
+        <p class="sub-lede">Formatos para el registro de la visita y la evaluación de desempeño práctico.</p>
+        <div class="embed-frame">
+          <div style="width: 100%;"><div style="position: relative; padding-bottom: 56.25%; padding-top: 0; height: 0;"><iframe title="Presentación Práctica" frameborder="0" width="1200" height="675" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" src="https://view.genially.com/6aad951d5975d6d8ff5f94fb" type="text/html" allowscriptaccess="always" allowfullscreen="true" scrolling="yes" allownetworking="all"></iframe> </div> </div>
         </div>
       </section>
 
-      <!-- 9 Puntos clave -->
+      <!-- 9 Control de asesorías -->
       <section class="panel" data-panel="9">
         <p class="eyebrow">Sección 9</p>
+        <h2>Control de asesorías</h2>
+        <hr class="rule">
+        <p class="lede">Registre aquí cada asesoría realizada con el estudiante. Diligencie un formulario por asesoría, en el momento en que la realice.</p>
+
+        <div class="callout">
+          <strong>Recuerde las 3 asesorías:</strong> Asesoría 1 (propuesta, al iniciar), Asesoría 2 (informe parcial, entre la 5ª y 6ª semana) y Asesoría 3 (informe final, al finalizar).
+        </div>
+
+        <div class="form-embed">
+          <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSeDGsDx-U0PUvtGH947oRNM4OOgvX8BHXpL2S_NIx2wHfG4OQ/viewform?embedded=true" title="Control de asesorías" frameborder="0" marginheight="0" marginwidth="0" loading="lazy">Cargando…</iframe>
+        </div>
+        <p class="embed-note">¿El formulario no carga? <a href="https://docs.google.com/forms/d/e/1FAIpQLSeDGsDx-U0PUvtGH947oRNM4OOgvX8BHXpL2S_NIx2wHfG4OQ/viewform" target="_blank" rel="noopener">Ábralo en una pestaña nueva ↗</a></p>
+      </section>
+
+      <!-- 10 Puntos clave -->
+      <section class="panel" data-panel="10">
+        <p class="eyebrow">Sección 10</p>
         <h2>Puntos clave y contacto</h2>
         <hr class="rule">
         <p class="lede">Algunos puntos operativos que conviene tener presentes durante el acompañamiento.</p>
@@ -457,17 +482,18 @@ var STEPS = [
   "Asignación académica y propuesta",
   "Estructura del informe final",
   "Evaluación y sustentación",
-  "Recursos descargables",
+  "Plantillas y formatos de evaluación",
+  "Control de asesorías",
   "Puntos clave y contacto"
 ];
 
 var CRONOGRAMA = [
-  ["Propuesta", "Presentación de actividades y propuesta de ejercicio práctico en el puesto asignado. Se consulta en la sección 6, \"Asignación académica y propuesta\", de esta guía.", "Estudiante", "Una vez, al iniciar"],
-  ["Asesoría 1 — Propuesta", "Revisión y organización de objetivos con el Director.", "Estudiante + Director", "Al iniciar"],
-  ["Asesoría 2 — Informe parcial", "Avance del informe con actividades; el Director devuelve con observaciones.", "Estudiante + Director", "Entre la 5ª y 6ª semana"],
-  ["Asesoría 3 — Informe final", "Reporte completo de la experiencia.", "Estudiante + Director", "Al finalizar"],
+  ["Propuesta", "Presentación de actividades y propuesta de ejercicio práctico en el puesto asignado. Se consulta en la sección \"Asignación académica y propuesta\" de esta guía.", "Estudiante", "Una vez, al iniciar"],
+  ["Asesoría 1 — Propuesta", "Revisión y organización de objetivos con el Director. Regístrela en \"Control de asesorías\".", "Estudiante + Director", "Al iniciar"],
+  ["Asesoría 2 — Informe parcial", "Avance del informe con actividades; el Director devuelve con observaciones. Regístrela en \"Control de asesorías\".", "Estudiante + Director", "Entre la 5ª y 6ª semana"],
+  ["Asesoría 3 — Informe final", "Reporte completo de la experiencia. Regístrela en \"Control de asesorías\".", "Estudiante + Director", "Al finalizar"],
   ["Visita a la empresa", "Evaluación del avance por parte del Director en la empresa.", "Director", "Mínimo 1 vez"],
-  ["Evaluación de la empresa", "Formato de evaluación de desempeño práctico diligenciado.", "Director + Jefe inmediato", "1 semana antes de la sustentación"],
+  ["Evaluación de la empresa", "Formato de evaluación de desempeño práctico diligenciado (ver \"Plantillas y formatos de evaluación\").", "Director + Jefe inmediato", "1 semana antes de la sustentación"],
   ["Acompañamiento el día de la sustentación", "Asista a la sustentación del estudiante ante el jurado calificador.", "Director", "Día de la sustentación"]
 ];
 
